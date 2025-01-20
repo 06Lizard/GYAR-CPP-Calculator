@@ -1,29 +1,23 @@
 #include "Math.h"
-#include "ExpressionEvaluator.h"// dosn't quite work yet
 #include <iostream>
-
-int math() {
-    while (true) {
-        std::cout << "Input format : val1 op val2, e.g., 2 * 4\nOperators : +, -, *, / , ^\nEnter a mathematical expression : ";
-        std::string exp;
-        std::cin >> exp;
-        std::cout << Math::calculate(exp) << "\n";
-    }
-}
+#include <chrono>
 
 int main() {
-    math();
+    while (true) {
+        using clock = std::chrono::high_resolution_clock; // cleans up the timers
 
+        std::cout << "Input format : val1 op val2, e.g., 2 * 4\nOperators : +, -, *, / , ^\nEnter a mathematical expression : ";
+        std::string exp; // init variable
+        std::cin >> exp; // get input
 
-    // trying to make calculator
-    try {
-        Calculator calculator;
-        std::string expression = "3 + 5 * (2 ^ 3)";  // Example input
-        double result = calculator.calculate(expression);
-        std::cout << "Result: " << result << std::endl; // Output: Result: 43
+        auto start = clock::now(); // start timer
+
+        double ans = Math::calculate(exp); // the calculation
+
+        auto end = clock::now(); // end timer
+        std::chrono::duration<double, std::micro> duration = end - start;
+        std::cout << "\t" << exp << " = " << ans << "\n\t"
+        //  << "Calculation took: "
+            << duration.count() << " microseconds\n" << std::endl;
     }
-    catch (const std::exception& e) {
-        std::cout << "Error: " << e.what() << std::endl;
-    }
-    return 0;
 }

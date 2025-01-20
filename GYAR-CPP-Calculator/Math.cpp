@@ -42,36 +42,35 @@ double Math::abs(double value) {
     return value < 0 ? -value : value;
 }
 
-double Math::calculate(std::string expretion) {
-    std::string expression = expretion;
+double Math::calculate(std::string expression) {
     expression.erase(remove(expression.begin(), expression.end(), ' '), expression.end());
     char operators[5] = { '+', '-', '*', '/', '^' };
+    try {
+        for (char op : operators) {
+            size_t pos = expression.find(op);
+            if (pos != std::string::npos) {
+                std::string left = expression.substr(0, pos);
+                std::string right = expression.substr(pos + 1);
 
-    for (char op : operators) {
-        size_t pos = expression.find(op);
-        if (pos != std::string::npos) {
-            std::string left = expression.substr(0, pos);
-            std::string right = expression.substr(pos + 1);
+                // Convert operands to double
+                double operand1 = std::stod(left);
+                double operand2 = std::stod(right);
 
-            // Convert operands to double
-            double operand1 = std::stod(left);
-            double operand2 = std::stod(right);
-
-            switch (op) {
-            case '+':
-                return add(operand1, operand2);
-            case '-':
-                return sub(operand1, operand2);
-            case '*':
-                return multi(operand1, operand2);
-            case '/':
-                return devi(operand1, operand2);
-            case '^':
-                return pow(operand1, operand2);
-            default:
-                return NAN;
+                switch (op) {
+                case '+':
+                    return add(operand1, operand2);
+                case '-':
+                    return sub(operand1, operand2);
+                case '*':
+                    return multi(operand1, operand2);
+                case '/':
+                    return devi(operand1, operand2);
+                case '^':
+                    return pow(operand1, operand2);
+                default:
+                    return NAN;
+                }
             }
         }
-    }
-    return NAN;
+    } catch (...) { return NAN; }
 }

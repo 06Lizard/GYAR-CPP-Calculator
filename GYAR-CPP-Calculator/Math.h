@@ -18,5 +18,5 @@ public:
     static double sqrt(double radicand);
     static double root(double radicand, double index);
     static double abs(double value);
-    static double calculate(std::string expretion);
+    static double calculate(std::string expression);
 };
